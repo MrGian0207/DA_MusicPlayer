@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="#000000"
+    tools:context=".Fragment.SearchFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="Search"
+                android:textColor="#ffffff"
+                android:textSize="22sp"/>
+            <androidx.appcompat.widget.SearchView
+                android:id="@+id/searchAll_SearchFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="24dp"
+                android:layout_marginVertical="5dp"
+                android:background="@drawable/search_view_bg"
+                android:backgroundTint="#584B3B"
+                app:searchIcon="@drawable/baseline_search_24"
+                app:iconifiedByDefault="false"
+                app:queryHint="Find in this page"
+                android:theme="@style/SearchViewHint"/>
+            <TextView
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="Songs"
+                android:textColor="#ffffff"
+                android:textSize="22sp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/songs_SearchFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:layout_marginEnd="25dp"
+                android:layout_marginTop="5dp"
+                android:orientation="vertical">
+            </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:layout_marginTop="7dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="17dp"
+                android:text="Albums"
+                android:textColor="#ffffff"
+                android:textSize="22sp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/albums_SearchFragment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginEnd="17dp"
+                android:orientation="vertical"></androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
+   </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

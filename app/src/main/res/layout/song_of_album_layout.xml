@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="8dp"
+    android:layout_marginTop="15dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/linear_gradient_album"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/image_songofalbum"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:src="@drawable/music_image">
+        </ImageView>
+        <LinearLayout
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:orientation="vertical">
+                <TextView
+                    android:id="@+id/title_songofalbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Easy"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/singer_songofalbum"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Troyse Sivan"
+                    android:textColor="#ffffff"
+                    android:textSize="16sp"/>
+        </LinearLayout>
+
+        <ImageView
+            android:id="@+id/favorite_song_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="20dp"
+            android:background="@drawable/baseline_favorite_border_24">
+        </ImageView>
+
+    </LinearLayout>
+
+</androidx.cardview.widget.CardView>
