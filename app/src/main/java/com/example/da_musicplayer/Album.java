@@ -2,10 +2,14 @@ package com.example.da_musicplayer;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,6 +20,8 @@ import com.example.da_musicplayer.Define.Albums;
 import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.SearchView.Search_In_Album;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -26,8 +32,9 @@ public class Album extends AppCompatActivity {
     SongOfAlbumAdapter songOfAlbumAdapter;
     CardView search_in_album;
     Intent intent;
-    Intent intent_getSongFavorite;
     ImageView image_album;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,7 +42,6 @@ public class Album extends AppCompatActivity {
         setContentView(R.layout.activity_album);
         image_album = findViewById(R.id.image_album);
         search_in_album = findViewById(R.id.search_in_album);
-
 
         intent = getIntent();
         Albums album = (Albums) intent.getSerializableExtra("album");
@@ -84,13 +90,11 @@ public class Album extends AppCompatActivity {
                     }
                 });
             }
-
             @Override
             public void onSongsItemLoadError(String errorMessage) {
                 // Xử lý lỗi ở đây
                 System.out.println("Lỗi: " + errorMessage);
             }
         },album.getKey());
-
     }
 }

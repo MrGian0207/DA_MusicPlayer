@@ -11,15 +11,16 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="150dp"
-        android:layout_height="180dp"
+        android:layout_height="wrap_content"
         app:cardMaxElevation="2dp"
         app:cardElevation="1dp"
         android:layout_centerInParent="true">
 
-        <RelativeLayout
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/midDark">
+            android:background="@color/midDark"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/image_topAlbums"
@@ -28,25 +29,36 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background"
                 tools:ignore="MissingConstraints" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:id="@+id/favorite_album_btn"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_horizontal"
+                android:background="@drawable/baseline_favorite_border_24" />
 
             <TextView
                 android:id="@+id/title_topAlbums"
-                android:layout_width="149dp"
-                android:layout_height="26dp"
-                android:layout_below="@+id/image_topAlbums"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_alignParentEnd="true"
                 android:layout_alignParentBottom="true"
                 android:layout_marginTop="4dp"
                 android:layout_marginEnd="0dp"
                 android:layout_marginBottom="0dp"
                 android:autoSizeMaxTextSize="15sp"
-                android:autoSizeMinTextSize="8sp"
+                android:autoSizeMinTextSize="10sp"
                 android:autoSizeTextType="uniform"
                 android:gravity="left"
                 android:text="Canada, haha, hah"
                 android:textColor="#ffffff"
                 android:textStyle="bold" />
-        </RelativeLayout>
+        </LinearLayout>
+
+        </LinearLayout>
     </androidx.cardview.widget.CardView>
 
 </RelativeLayout>

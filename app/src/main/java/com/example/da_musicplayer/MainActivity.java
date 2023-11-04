@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
@@ -31,7 +33,6 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    private FrameLayout tabNavigation;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -40,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseUser user;
     GoogleSignInClient googleSignInClient;
     GoogleSignInOptions googleSignInOptions;
-
 
     private String email;
     private String uid;
@@ -51,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         tabLayout = findViewById(R.id.tabLayout);
         viewPager = findViewById(R.id.viewPager);

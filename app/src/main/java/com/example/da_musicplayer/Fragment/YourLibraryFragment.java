@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -18,8 +19,12 @@ import android.widget.TextView;
 
 import com.example.da_musicplayer.Adapter.ItemsOfYourLibraryAdapter;
 import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
+import com.example.da_musicplayer.Adapter.TopAlbumsAdapter;
+import com.example.da_musicplayer.Data.AlbumsFavorite_Data;
 import com.example.da_musicplayer.Data.SongsFavorite_Data;
+import com.example.da_musicplayer.Define.Albums;
 import com.example.da_musicplayer.Define.Songs_Item;
+import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.Login.LoginActivity;
 import com.example.da_musicplayer.Player;
@@ -47,7 +52,8 @@ public class YourLibraryFragment extends Fragment {
 
     RecyclerView playlist_favourite;
     RecyclerView albumlist_favourite;
-    ItemsOfYourLibraryAdapter itemsOfYourLibraryAdapter;
+    ItemsOfYourLibraryAdapter songOfYourLibraryAdapter;
+    TopAlbumsAdapter albumOfYourLibraryAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -96,9 +102,9 @@ public class YourLibraryFragment extends Fragment {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                 playlist_favourite = view.findViewById(R.id.playlist_favourite);
                 playlist_favourite.setLayoutManager(layoutManager);
-                itemsOfYourLibraryAdapter = new ItemsOfYourLibraryAdapter(getContext(), SongsFavouriteList);
-                playlist_favourite.setAdapter(itemsOfYourLibraryAdapter);
-                itemsOfYourLibraryAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
+                songOfYourLibraryAdapter = new ItemsOfYourLibraryAdapter(getContext(), SongsFavouriteList);
+                playlist_favourite.setAdapter(songOfYourLibraryAdapter);
+                songOfYourLibraryAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
                         Intent intent = new Intent(getActivity(), Player.class);
@@ -113,6 +119,18 @@ public class YourLibraryFragment extends Fragment {
             }
         },user.getUid());
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+        AlbumsFavorite_Data.generateAlbumFavouriteItem(new AlbumsCallback() {
+            @Override
+            public void onAlbumsLoaded(ArrayList<Albums> albums) {
+                GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
+                albumlist_favourite = view.findViewById(R.id.albumlist_favourite);
+                albumlist_favourite.setLayoutManager(gridLayoutManager);
+                albumOfYourLibraryAdapter = new TopAlbumsAdapter(getContext(), albums);
+                albumlist_favourite.setAdapter(albumOfYourLibraryAdapter);
+            }
+            @Override
+            public void onAlbumsLoadError(String errorMessage) {
+            }
+        },user.getUid());
     }
 }

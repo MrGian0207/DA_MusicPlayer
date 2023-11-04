@@ -69,7 +69,6 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
     @Override
     public void onBindViewHolder(@NonNull SongOfAlbumAdapter.MyViewHolder holder, int position) {
         Songs_Item song_favourite = songs_of_album_list.get(position);
-
         // Trạng thái ban đầu
         isFavorite = sharedPreferences.getBoolean(song_favourite.getTitle_song(), false);
 
