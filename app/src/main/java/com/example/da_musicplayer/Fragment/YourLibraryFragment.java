@@ -6,6 +6,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
@@ -15,14 +16,24 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.da_musicplayer.Adapter.ItemsOfYourLibraryAdapter;
+import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
+import com.example.da_musicplayer.Data.SongsFavorite_Data;
+import com.example.da_musicplayer.Define.Songs_Item;
+import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.Login.LoginActivity;
+import com.example.da_musicplayer.Player;
 import com.example.da_musicplayer.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
 
 public class YourLibraryFragment extends Fragment {
 
@@ -36,6 +47,7 @@ public class YourLibraryFragment extends Fragment {
 
     RecyclerView playlist_favourite;
     RecyclerView albumlist_favourite;
+    ItemsOfYourLibraryAdapter itemsOfYourLibraryAdapter;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -77,8 +89,30 @@ public class YourLibraryFragment extends Fragment {
             }
         });
 
-////////////////////////////////////////////////////////////////////// Xử lí trong Your Library //////
-
+//////////////////////////////////////// Xử lí trong Your Library //////////////////////////////////////
+        SongsFavorite_Data.generateSongsItem(new SongsItemCallback() {
+            @Override
+            public void onSongsItemLoaded(ArrayList<Songs_Item> SongsFavouriteList) {
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
+                playlist_favourite = view.findViewById(R.id.playlist_favourite);
+                playlist_favourite.setLayoutManager(layoutManager);
+                itemsOfYourLibraryAdapter = new ItemsOfYourLibraryAdapter(getContext(), SongsFavouriteList);
+                playlist_favourite.setAdapter(itemsOfYourLibraryAdapter);
+                itemsOfYourLibraryAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(int position) {
+                        Intent intent = new Intent(getActivity(), Player.class);
+                        intent.putExtra("favouriteSong_list", SongsFavouriteList);
+                        intent.putExtra("position_song_favourite", position);
+                        startActivity(intent);
+                    }
+                });
+            }
+            @Override
+            public void onSongsItemLoadError(String errorMessage) {
+            }
+        },user.getUid());
+////////////////////////////////////////////////////////////////////////////////////////////////////////
 
     }
 }

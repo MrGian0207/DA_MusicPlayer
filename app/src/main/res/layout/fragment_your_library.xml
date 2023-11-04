@@ -69,36 +69,50 @@
             </LinearLayout>
 
         </LinearLayout>
-      <TextView
-            android:layout_marginTop="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:text="PlayLists"
-            android:textColor="#ffffff"
-            android:textSize="20sp"/>
-      <androidx.recyclerview.widget.RecyclerView
-          android:id="@+id/playlist_favourite"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_marginHorizontal="17dp"
-          android:layout_weight="1">
-      </androidx.recyclerview.widget.RecyclerView>
-        <TextView
-            android:layout_marginTop="7dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="17dp"
-            android:text="AlbumLists"
-            android:textColor="#ffffff"
-            android:textSize="20sp"/>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/albumlist_favourite"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginHorizontal="17dp"
-            android:layout_weight="1">
-        </androidx.recyclerview.widget.RecyclerView>
+            android:layout_height="match_parent">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+                <TextView
+                    android:layout_marginTop="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="17dp"
+                    android:text="PlayList"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/playlist_favourite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="17dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:layout_marginTop="7dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                        android:layout_marginStart="17dp"
+                    android:text="AlbumList"
+                    android:textColor="#ffffff"
+                    android:textSize="20sp"/>
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/albumlist_favourite"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginHorizontal="17dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+        
     </LinearLayout>
 
 </FrameLayout>

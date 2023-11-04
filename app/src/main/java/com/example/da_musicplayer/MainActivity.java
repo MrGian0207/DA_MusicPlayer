@@ -4,8 +4,11 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
+import android.graphics.Color;
 import android.media.Image;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.example.da_musicplayer.Adapter.NavigationAdapter;
@@ -28,6 +31,7 @@ import com.squareup.picasso.Picasso;
 public class MainActivity extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;
+    private FrameLayout tabNavigation;
 
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
@@ -64,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         tabLayout.getTabAt(0).setIcon(R.drawable.baseline_home_24);
         tabLayout.getTabAt(1).setIcon(R.drawable.baseline_search_24);
         tabLayout.getTabAt(2).setIcon(R.drawable.baseline_view_headline_24);
-
 
         database = FirebaseDatabase.getInstance();
         databaseReference = database.getReference();

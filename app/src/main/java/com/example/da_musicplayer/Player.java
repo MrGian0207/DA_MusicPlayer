@@ -37,7 +37,7 @@ public class Player extends AppCompatActivity {
     Intent intent_songofalbum;
     Intent intent_TopSongs;
     Intent intent_song_FromSearchInAlbum;
-    Intent intent_songFromSearchFragment;
+    Intent intent_song_FromFavouriteList;
     ArrayList<Songs_Item> songsList;
     protected String linkSong;
     int position;
@@ -102,11 +102,26 @@ public class Player extends AppCompatActivity {
                     .into(image_player);
             linkSong = songs_fromSearchInAlbum.get(position).getLink_song();
         }
+////////////////// Get nhạc từ favourite song list //////////////////////////////////////////////////////
+        intent_song_FromFavouriteList = getIntent();
+        ArrayList<Songs_Item> songs_of_favouriteList = (ArrayList<Songs_Item>) intent_song_FromFavouriteList.getSerializableExtra("favouriteSong_list");
+        position = (int) intent_songofalbum.getIntExtra("position_song_favourite",-1);
+        if (songs_of_favouriteList != null && position >= 0){
+            Picasso.get()
+                    .load(songs_of_favouriteList.get(position).getSource_photo())
+                    .resize(2000, 2000)
+                    .centerCrop()
+                    .into(image_player);
+            linkSong = songs_of_favouriteList.get(position).getLink_song();
+        }
+
 ///////////////////// Get list nhạc tồn tại//////////////////////////////////////////////////////////////
         if (songs_of_album_list != null){
             songsList = songs_of_album_list;
         } else if (songs_fromSearchInAlbum != null) {
             songsList = songs_fromSearchInAlbum;
+        } else if (songs_of_favouriteList != null) {
+            songsList = songs_of_favouriteList;
         }
 ///////////////////////////////////////////////////////////////////////////
         playerSeekbar.setMax(100);

@@ -8,43 +8,61 @@
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
-        android:layout_width="406dp"
-        android:layout_height="659dp"
-        app:layout_constraintBottom_toTopOf="@id/tabLayout"
+        android:layout_width="412dp"
+        android:layout_height="648dp"
+        app:layout_constraintBottom_toTopOf="@+id/tabNavigation"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:layout_width="409dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/tabLayout"
+    <FrameLayout
+        android:id="@+id/tabNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:background="@color/midDark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:background="#000000"
-        app:tabTextColor="#ffffff"
-        app:tabIconTint="#ffffff">
+        app:layout_constraintStart_toStartOf="parent">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Home"
-            tools:layout_editor_absoluteX="3dp"
-            tools:layout_editor_absoluteY="681dp"/>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tabLayout"
+            android:layout_width="350dp"
+            android:layout_height="60dp"
+            android:padding="2dp"
+            android:layout_marginVertical="10dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/custom_tab_layout"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:tabIconTint="@color/black"
+            app:tabTextColor="@color/black">
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Search"
-            tools:layout_editor_absoluteX="190dp"
-            tools:layout_editor_absoluteY="62dp" />
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Home"
+                android:icon="@drawable/baseline_home_24"
+                tools:layout_editor_absoluteX="3dp"
+                tools:layout_editor_absoluteY="681dp" />
 
-        <com.google.android.material.tabs.TabItem
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Your Library" />
-    </com.google.android.material.tabs.TabLayout>
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Search"
+                android:icon="@drawable/baseline_search_24"
+                tools:layout_editor_absoluteX="150dp"
+                tools:layout_editor_absoluteY="682dp" />
+
+            <com.google.android.material.tabs.TabItem
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:icon="@drawable/baseline_view_headline_24"
+                android:text="Your Library" />
+        </com.google.android.material.tabs.TabLayout>
+
+    </FrameLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
