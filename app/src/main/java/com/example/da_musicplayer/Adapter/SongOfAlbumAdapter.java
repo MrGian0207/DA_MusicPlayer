@@ -56,7 +56,7 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
     public SongOfAlbumAdapter(Context mContext, ArrayList<Songs_Item> songs_of_album_list) {
         this.songs_of_album_list = songs_of_album_list;
         this.mContext = mContext;
-        this.sharedPreferences = mContext.getSharedPreferences("FavoriteSongs", Context.MODE_PRIVATE);
+        this.sharedPreferences = mContext.getSharedPreferences("FavoriteSongs"+MainActivity.uid_User(), Context.MODE_PRIVATE);
     }
 
     @NonNull

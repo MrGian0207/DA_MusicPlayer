@@ -44,7 +44,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
     public TopAlbumsAdapter(Context context, ArrayList<Albums> albums_list) {
         this.mContext = context;
         this.albums_list = albums_list;
-        this.sharedPreferences = mContext.getSharedPreferences("FavoriteAlbums", Context.MODE_PRIVATE);
+        this.sharedPreferences = mContext.getSharedPreferences("FavoriteAlbums"+MainActivity.uid_User(), Context.MODE_PRIVATE);
     }
 ////////////////////////////////////////////////////////////////////////////////////
     public TopAlbumsAdapter(ArrayList<Albums> albums_list) {

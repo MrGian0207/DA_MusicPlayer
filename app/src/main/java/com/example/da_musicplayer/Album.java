@@ -34,8 +34,6 @@ public class Album extends AppCompatActivity {
     Intent intent;
     ImageView image_album;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -98,3 +96,4 @@ public class Album extends AppCompatActivity {
         },album.getKey());
     }
 }
+
