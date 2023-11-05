@@ -16,7 +16,7 @@ public class SongsFavorite_Data {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
-    public static void generateSongsItem(final SongsItemCallback callback, String key) {
+    public static void generateSongsFavorite_Data(final SongsItemCallback callback, String key) {
         myRef.child("Users/"+key+"/listSongFavourite").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

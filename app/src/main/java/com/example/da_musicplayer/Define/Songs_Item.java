@@ -9,6 +9,9 @@ public class Songs_Item implements Serializable {
     private String singer_song;
     private String link_song;
 
+    public Songs_Item() {
+    }
+
     public Songs_Item(int id, String source_photo, String title_song, String singer_song, String link_song) {
         this.id = id;
         this.source_photo = source_photo;

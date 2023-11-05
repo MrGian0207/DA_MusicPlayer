@@ -21,7 +21,12 @@
             android:layout_height="match_parent"
             android:background="@color/midDark"
             android:orientation="vertical">
-
+        <androidx.cardview.widget.CardView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="20dp"
+            app:cardMaxElevation="2dp"
+            app:cardElevation="1dp">
             <ImageView
                 android:id="@+id/image_topAlbums"
                 android:layout_width="match_parent"
@@ -29,6 +34,10 @@
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_launcher_background"
                 tools:ignore="MissingConstraints" />
+        </androidx.cardview.widget.CardView>
+
+
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

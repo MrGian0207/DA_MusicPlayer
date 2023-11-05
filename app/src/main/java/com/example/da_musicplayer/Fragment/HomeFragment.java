@@ -26,6 +26,7 @@ import com.example.da_musicplayer.Define.Songs;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.example.da_musicplayer.Interface.ArtistsCallback;
 import com.example.da_musicplayer.Interface.SongsCallback;
+import com.example.da_musicplayer.Manager.FavoriteManager;
 import com.example.da_musicplayer.R;
 
 import java.util.ArrayList;
@@ -39,6 +40,7 @@ public class HomeFragment extends Fragment{
     TopAlbumsAdapter adapter_albums;
     TopArtistsAdapter adapter_artists;
     TopSongsAdapter adapter_songs;
+    private FavoriteManager favoriteManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,7 +53,7 @@ public class HomeFragment extends Fragment{
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+        favoriteManager = new FavoriteManager(getContext());
         AlbumsData.generateAlbumsData(new AlbumsCallback() {
             @Override
             public void onAlbumsLoaded(ArrayList<Albums> albums) {
@@ -59,7 +61,7 @@ public class HomeFragment extends Fragment{
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView = view.findViewById(R.id.topAlbums_recyclerview);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter_albums = new TopAlbumsAdapter(getActivity().getApplicationContext(), albumsList);
+                adapter_albums = new TopAlbumsAdapter(getContext(), albumsList, favoriteManager);
                 recyclerView.setAdapter(adapter_albums);
             }
 
@@ -107,5 +109,4 @@ public class HomeFragment extends Fragment{
         });
 
     }
-
 }

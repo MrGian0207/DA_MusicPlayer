@@ -104,7 +104,7 @@
                     android:id="@+id/albumlist_favourite"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_marginHorizontal="17dp"
+                    android:layout_marginLeft="35dp"
                     android:orientation="vertical"
                     android:layout_weight="1">
                 </androidx.recyclerview.widget.RecyclerView>

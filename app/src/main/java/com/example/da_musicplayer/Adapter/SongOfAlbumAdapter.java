@@ -33,6 +33,7 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
     private SharedPreferences sharedPreferences;
     boolean isFavorite;
 
+
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
@@ -71,7 +72,6 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
         Songs_Item song_favourite = songs_of_album_list.get(position);
         // Trạng thái ban đầu
         isFavorite = sharedPreferences.getBoolean(song_favourite.getTitle_song(), false);
-
         if (isFavorite) {
             database = FirebaseDatabase.getInstance();
             databaseReference = database.getReference();

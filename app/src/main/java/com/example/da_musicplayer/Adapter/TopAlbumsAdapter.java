@@ -21,6 +21,7 @@ import com.example.da_musicplayer.Define.Songs;
 import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.MainActivity;
+import com.example.da_musicplayer.Manager.FavoriteManager;
 import com.example.da_musicplayer.Player;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DatabaseReference;
@@ -40,11 +41,13 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
     private DatabaseReference databaseReference;
     private SharedPreferences sharedPreferences;
     boolean isFavorite;
+    private FavoriteManager favoriteManager;
 
-    public TopAlbumsAdapter(Context context, ArrayList<Albums> albums_list) {
+    public TopAlbumsAdapter(Context context, ArrayList<Albums> albums_list, FavoriteManager favoriteManager) {
         this.mContext = context;
         this.albums_list = albums_list;
-        this.sharedPreferences = mContext.getSharedPreferences("FavoriteAlbums"+MainActivity.uid_User(), Context.MODE_PRIVATE);
+//        this.sharedPreferences = mContext.getSharedPreferences("FavoriteAlbums"+MainActivity.uid_User(), Context.MODE_PRIVATE);
+        this.favoriteManager = favoriteManager;
     }
 ////////////////////////////////////////////////////////////////////////////////////
     public TopAlbumsAdapter(ArrayList<Albums> albums_list) {
@@ -65,7 +68,6 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
 
     @Override
     public void onBindViewHolder(@NonNull TopAlbumsAdapter.MyViewHolder holder, int position) {
-
         Albums album = new Albums(albums_list.get(position).getId(),
                 albums_list.get(position).getSource_photo(),
                 albums_list.get(position).getTitle_photo(),
@@ -77,7 +79,8 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
         holder.title_topAlbums.setText(albums_list.get(position).getTitle_photo());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Trạng thái ban đầu
-        isFavorite = sharedPreferences.getBoolean(album.getKey(), false);
+        isFavorite = favoriteManager.isFavorite(album.getKey());
+
         if (isFavorite) {
             Albums album_favourite = new Albums(album.getId(),
                     album.getSource_photo(),
@@ -130,12 +133,9 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
                             .setValue(album_favourite);
 
                     // Bạn đã đánh dấu là yêu thích
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean(album.getKey(), true);
+                    favoriteManager.setFavorite(album.getKey(), true);
                     Drawable favoriteDrawable = ContextCompat.getDrawable(mContext, R.drawable.baseline_favorite_24);
                     holder.favorite_album_btn.setBackground(favoriteDrawable);
-                    editor.apply();
-
                     // Thực hiện các xử lý khi đánh dấu là yêu thích
                 } else {
                     database = FirebaseDatabase.getInstance();
@@ -146,11 +146,9 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
                             .child(album.getKey())
                             .removeValue();
                     // Bỏ đánh dấu là yêu thích
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean(album.getKey(), false);
+                    favoriteManager.setFavorite(album.getKey(), false);
                     Drawable favoriteDrawable = ContextCompat.getDrawable(mContext, R.drawable.baseline_favorite_border_24);
                     holder.favorite_album_btn.setBackground(favoriteDrawable);
-                    editor.apply();
                     // Thực hiện các xử lý khi bỏ đánh dấu là yêu thích
                 }
             }
@@ -161,6 +159,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
             public void onClick(View v) {
                 Intent intent = new Intent(v.getContext(), Album.class);
                 intent.putExtra("album",(Serializable) album);
+                intent.putExtra("top_albumClicked",true);
                 v.getContext().startActivity(intent);
             }
         });

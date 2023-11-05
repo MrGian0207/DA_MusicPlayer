@@ -1,15 +1,23 @@
 package com.example.da_musicplayer.Adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.da_musicplayer.Define.Songs_Item;
+import com.example.da_musicplayer.Fragment.YourLibraryFragment;
+import com.example.da_musicplayer.MainActivity;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -21,6 +29,12 @@ public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourL
 
     private ArrayList<Songs_Item> songs_of_favoriteList;
     private Context mContext;
+
+    private FirebaseDatabase database;
+    private DatabaseReference databaseReference;
+    private SharedPreferences sharedPreferences;
+    private Boolean isRemove;
+    int removePosition;
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -45,13 +59,34 @@ public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourL
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemsOfYourLibraryAdapter.MyViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ItemsOfYourLibraryAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+
+        Songs_Item song = songs_of_favoriteList.get(position);
+        removePosition = position;
         Picasso.get().load(songs_of_favoriteList.get(position).getSource_photo()).into(holder.image_itemOfYourLibrary);
         holder.title_itemOfYourLibrary.setText(songs_of_favoriteList.get(position).getTitle_song());
         holder.clear_itemOfYourLibrary_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                database = FirebaseDatabase.getInstance();
+                databaseReference = database.getReference();
+                databaseReference.child("Users")
+                        .child(MainActivity.uid_User())
+                        .child("listSongFavourite")
+                        .child(song.getTitle_song())
+                        .removeValue();
+                sharedPreferences = mContext.getSharedPreferences("FavoriteSongs"+MainActivity.uid_User(),Context.MODE_PRIVATE);
+                isRemove = sharedPreferences.getBoolean(song.getTitle_song(), false);
+                if(isRemove) {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean(song.getTitle_song(), false);
+                    editor.apply();
+                   if(removePosition != -1){
+                       removeSong(song);
+                       notifyItemRemoved(removePosition);
+                   }
 
+                }
             }
         });
     }
@@ -85,4 +120,21 @@ public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourL
 
         }
     }
+/////////////////////////////////////////////////////////////////////////////////////////////
+    public void addSong(Songs_Item song){
+        songs_of_favoriteList.add(song);
+    }
+
+    public void updateSong(int position, Songs_Item song){
+        songs_of_favoriteList.set(position, song);
+    }
+
+    public void removeSong(Songs_Item song) {
+        songs_of_favoriteList.remove(song);
+    }
+
+    public int findAlbumPosition(Songs_Item song) {
+        return songs_of_favoriteList.indexOf(song);
+    }
+////////////////////////////////////////////////////////////////////////////////////////////
 }

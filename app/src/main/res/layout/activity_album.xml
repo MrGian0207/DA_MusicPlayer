@@ -11,6 +11,27 @@
             android:layout_height="match_parent"
             android:background="@drawable/linear_gradient_album"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/backFromAlbumActivity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingVertical="10dp"
+                android:paddingHorizontal="10dp">
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:background="@drawable/baseline_keyboard_backspace_24"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Back"
+                        android:textColor="@color/dark"
+                        android:textStyle="bold"
+                        android:textSize="20sp"/>
+            </LinearLayout>
+
+
                 <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="40dp"

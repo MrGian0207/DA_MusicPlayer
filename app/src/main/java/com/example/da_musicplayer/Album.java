@@ -13,11 +13,14 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
 import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
 
 import com.example.da_musicplayer.Data.Songs_Item_Data;
 import com.example.da_musicplayer.Define.Albums;
 import com.example.da_musicplayer.Define.Songs_Item;
+import com.example.da_musicplayer.Fragment.SearchFragment;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.SearchView.Search_In_Album;
 import com.google.firebase.database.DatabaseReference;
@@ -33,6 +36,7 @@ public class Album extends AppCompatActivity {
     CardView search_in_album;
     Intent intent;
     ImageView image_album;
+    LinearLayout backFromAlbumActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +44,27 @@ public class Album extends AppCompatActivity {
         setContentView(R.layout.activity_album);
         image_album = findViewById(R.id.image_album);
         search_in_album = findViewById(R.id.search_in_album);
+        backFromAlbumActivity = findViewById(R.id.backFromAlbumActivity);
+
+        backFromAlbumActivity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = getIntent();
+                boolean top_albumClicked = intent.getBooleanExtra("top_albumClicked",false);
+                boolean album_searchFragmentClicked = intent.getBooleanExtra("album_searchFragmentClicked", false);
+                if (top_albumClicked == true ) {
+//                    Intent intentBack = new Intent(Album.this, MainActivity.class);
+//                    startActivity(intentBack);
+                    onBackPressed(Album.this);
+                }
+                else if(album_searchFragmentClicked == true) {
+                        onBackPressed(Album.this);
+                }
+
+            }
+        });
+
+
 
         intent = getIntent();
         Albums album = (Albums) intent.getSerializableExtra("album");
@@ -95,5 +120,15 @@ public class Album extends AppCompatActivity {
             }
         },album.getKey());
     }
+
+    @SuppressWarnings("deprecation")
+    // Trong hoạt động mới của bạn
+    public void onBackPressed(Context context) {
+        super.onBackPressed();
+        // Gọi phương thức navigateToSearchFragment() để quay lại SearchFragment
+        MainActivity mainActivity = new MainActivity(); // Tạo một đối tượng MainActivity
+        mainActivity.navigateToFragment(context); // Gọi phương thức để quay lại SearchFragment
+    }
+
 }
 

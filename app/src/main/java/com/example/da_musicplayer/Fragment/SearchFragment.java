@@ -16,6 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.example.da_musicplayer.Adapter.SearchAlbumsAdapter;
 import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
 import com.example.da_musicplayer.Adapter.TopAlbumsAdapter;
 import com.example.da_musicplayer.Data.AlbumsData;
@@ -28,6 +29,7 @@ import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.example.da_musicplayer.Interface.SongsCallback;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
+import com.example.da_musicplayer.Manager.FavoriteManager;
 import com.example.da_musicplayer.Player;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DataSnapshot;
@@ -44,9 +46,11 @@ public class SearchFragment extends Fragment {
     RecyclerView albums_SearchFragment;
     RecyclerView songs_SearchFragment;
     ArrayList<Albums> albumsList;
+
     ArrayList<Songs_Item> songs_List;
-    TopAlbumsAdapter adapter_albums;
+    SearchAlbumsAdapter adapter_albums;
     SongOfAlbumAdapter songOfAlbumAdapter;
+    private FavoriteManager favoriteManager;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -58,7 +62,7 @@ public class SearchFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
+            favoriteManager = new FavoriteManager(getContext());
             searchAll_SearchFragment = view.findViewById(R.id.searchAll_SearchFragment);
             searchAll_SearchFragment.clearFocus();
 
@@ -70,7 +74,7 @@ public class SearchFragment extends Fragment {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 albums_SearchFragment = view.findViewById(R.id.albums_SearchFragment);
                 albums_SearchFragment.setLayoutManager(gridLayoutManager);
-                adapter_albums = new TopAlbumsAdapter(getActivity().getApplicationContext(), albums);
+                adapter_albums = new SearchAlbumsAdapter(getContext(), albums, favoriteManager);
                 albums_SearchFragment.setAdapter(adapter_albums);
             }
             @Override
@@ -85,7 +89,7 @@ public class SearchFragment extends Fragment {
                 GridLayoutManager gridLayoutManager1 = new GridLayoutManager(getContext(), 1);
                 songs_SearchFragment = view.findViewById(R.id.songs_SearchFragment);
                 songs_SearchFragment.setLayoutManager(gridLayoutManager1);
-                songOfAlbumAdapter = new SongOfAlbumAdapter(getActivity().getApplicationContext(),songsList);
+                songOfAlbumAdapter = new SongOfAlbumAdapter(getContext(),songsList);
                 songs_SearchFragment.setAdapter(songOfAlbumAdapter);
                 songOfAlbumAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
                     @Override
@@ -135,9 +139,5 @@ public class SearchFragment extends Fragment {
             songOfAlbumAdapter.setFilteredList(filterList_Song);
             adapter_albums.setFilteredList(filterList_Album);
         }
-
-
-
     }
-
 }
