@@ -1,6 +1,5 @@
 package com.example.da_musicplayer.Fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -16,35 +15,28 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.da_musicplayer.Adapter.ItemsOfYourLibraryAdapter;
+import com.example.da_musicplayer.Adapter.SongsOfYourLibraryAdapter;
 import com.example.da_musicplayer.Adapter.SearchAlbumsAdapter;
 import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
-import com.example.da_musicplayer.Adapter.TopAlbumsAdapter;
 import com.example.da_musicplayer.Data.AlbumsFavorite_Data;
 import com.example.da_musicplayer.Data.SongsFavorite_Data;
-import com.example.da_musicplayer.Define.Albums;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.Login.LoginActivity;
-import com.example.da_musicplayer.MainActivity;
 import com.example.da_musicplayer.Manager.FavoriteManager;
-import com.example.da_musicplayer.Player;
+import com.example.da_musicplayer.PlayerActivity;
 import com.example.da_musicplayer.R;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -59,7 +51,7 @@ public class YourLibraryFragment extends Fragment {
 
     RecyclerView playlist_favourite;
     RecyclerView albumlist_favourite;
-    ItemsOfYourLibraryAdapter songOfYourLibraryAdapter;
+    SongsOfYourLibraryAdapter songOfYourLibraryAdapter;
     SearchAlbumsAdapter albumOfYourLibraryAdapter;
 
     FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -122,12 +114,12 @@ public class YourLibraryFragment extends Fragment {
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
                 playlist_favourite = view.findViewById(R.id.playlist_favourite);
                 playlist_favourite.setLayoutManager(layoutManager);
-                songOfYourLibraryAdapter = new ItemsOfYourLibraryAdapter(getContext(), SongsFavouriteList);
+                songOfYourLibraryAdapter = new SongsOfYourLibraryAdapter(getContext(), SongsFavouriteList);
                 playlist_favourite.setAdapter(songOfYourLibraryAdapter);
                 songOfYourLibraryAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        Intent intent = new Intent(getActivity(), Player.class);
+                        Intent intent = new Intent(getActivity(), PlayerActivity.class);
                         intent.putExtra("favouriteSong_list", SongsFavouriteList);
                         intent.putExtra("position_song_favourite", position);
                         startActivity(intent);
@@ -141,7 +133,7 @@ public class YourLibraryFragment extends Fragment {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////
         AlbumsFavorite_Data.generateAlbumFavouriteItem(new AlbumsCallback() {
             @Override
-            public void onAlbumsLoaded(ArrayList<Albums> albums) {
+            public void onAlbumsLoaded(ArrayList<Album> albums) {
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 albumlist_favourite = view.findViewById(R.id.albumlist_favourite);
                 albumlist_favourite.setLayoutManager(gridLayoutManager);
@@ -152,6 +144,5 @@ public class YourLibraryFragment extends Fragment {
             public void onAlbumsLoadError(String errorMessage) {
             }
         },user.getUid());
-
     }
 }

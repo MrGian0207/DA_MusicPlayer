@@ -8,35 +8,23 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.example.da_musicplayer.Adapter.SearchAlbumsAdapter;
 import com.example.da_musicplayer.Adapter.SongOfAlbumAdapter;
-import com.example.da_musicplayer.Adapter.TopAlbumsAdapter;
-import com.example.da_musicplayer.Data.AlbumsData;
-import com.example.da_musicplayer.Data.ListSongsData;
+import com.example.da_musicplayer.Data.TopAlbumsData;
 import com.example.da_musicplayer.Data.SongsData;
-import com.example.da_musicplayer.Data.Songs_Item_Data;
-import com.example.da_musicplayer.Define.Albums;
-import com.example.da_musicplayer.Define.Songs;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
-import com.example.da_musicplayer.Interface.SongsCallback;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.example.da_musicplayer.Manager.FavoriteManager;
-import com.example.da_musicplayer.Player;
+import com.example.da_musicplayer.PlayerActivity;
 import com.example.da_musicplayer.R;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
@@ -45,7 +33,7 @@ public class SearchFragment extends Fragment {
     SearchView searchAll_SearchFragment;
     RecyclerView albums_SearchFragment;
     RecyclerView songs_SearchFragment;
-    ArrayList<Albums> albumsList;
+    ArrayList<Album> albumList;
 
     ArrayList<Songs_Item> songs_List;
     SearchAlbumsAdapter adapter_albums;
@@ -67,10 +55,10 @@ public class SearchFragment extends Fragment {
             searchAll_SearchFragment.clearFocus();
 
 /////////////////////////////////////// Đổ all Albums /////////////////////////////////
-        AlbumsData.generateAlbumsData(new AlbumsCallback() {
+        TopAlbumsData.generateAlbumsData(new AlbumsCallback() {
             @Override
-            public void onAlbumsLoaded(ArrayList<Albums> albums) {
-                albumsList = albums;
+            public void onAlbumsLoaded(ArrayList<Album> albums) {
+                albumList = albums;
                 GridLayoutManager gridLayoutManager = new GridLayoutManager(getContext(),2);
                 albums_SearchFragment = view.findViewById(R.id.albums_SearchFragment);
                 albums_SearchFragment.setLayoutManager(gridLayoutManager);
@@ -82,7 +70,7 @@ public class SearchFragment extends Fragment {
             }
         });
 /////////////////////////////////////// Đổ all Songs //////////////////////////////////
-        ListSongsData.generatelistSongs(new SongsItemCallback() {
+        SongsData.generatelistSongs(new SongsItemCallback() {
             @Override
             public void onSongsItemLoaded(ArrayList<Songs_Item> songsList) {
                 songs_List = songsList;
@@ -94,7 +82,7 @@ public class SearchFragment extends Fragment {
                 songOfAlbumAdapter.setOnItemClickListener(new SongOfAlbumAdapter.OnItemClickListener() {
                     @Override
                     public void onItemClick(int position) {
-                        Intent intent = new Intent(getContext(), Player.class);
+                        Intent intent = new Intent(getContext(), PlayerActivity.class);
                         intent.putExtra("song_from_searchFragment",songsList.get(position));
                         startActivity(intent);
                     }
@@ -122,14 +110,14 @@ public class SearchFragment extends Fragment {
     }
     private void filterList(String text){
             ArrayList<Songs_Item> filterList_Song = new ArrayList<>();
-            ArrayList<Albums> filterList_Album = new ArrayList<>();
+            ArrayList<Album> filterList_Album = new ArrayList<>();
         for (Songs_Item songsItem: songs_List){
             if(songsItem.getTitle_song().toLowerCase().contains(text.toLowerCase())){
                 filterList_Song.add(songsItem);
             }
         }
 
-        for(Albums album: albumsList){;
+        for(Album album: albumList){;
             if(album.getName().toLowerCase().contains(text.toLowerCase())){
                 filterList_Album.add(album);
             }

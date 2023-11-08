@@ -2,7 +2,8 @@ package com.example.da_musicplayer.Data;
 
 import androidx.annotation.NonNull;
 
-import com.example.da_musicplayer.Define.Artists;
+import com.example.da_musicplayer.Define.Artist;
+import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.ArtistsCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -12,22 +13,24 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ArtistsData {
+public class TopArtistsData {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
 
     public static void generateArtist(final ArtistsCallback callback) {
-        myRef.child("Artists").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("TopArtists").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Artists> artists = new ArrayList<>();
+                ArrayList<Artist> artists = new ArrayList<>();
                 if (snapshot.exists()) {
                     for (DataSnapshot artistSnapshot : snapshot.getChildren()) {
                         if (artistSnapshot.exists()) {
                             Integer id = 0;
                             String image = "";
                             String title = "";
+                            String key = "";
+
                             for (DataSnapshot artistSnapshot_item : artistSnapshot.getChildren()) {
 
                                 if (artistSnapshot_item.getKey().equals("id")) {
@@ -36,10 +39,12 @@ public class ArtistsData {
                                     image = artistSnapshot_item.getValue(String.class);
                                 } else if (artistSnapshot_item.getKey().equals("title")) {
                                     title = artistSnapshot_item.getValue(String.class);
+                                } else if (artistSnapshot_item.getKey().equals("key")) {
+                                    key = artistSnapshot_item.getValue(String.class);
                                 }
 
                             }
-                            Artists artist = new Artists(id, image, title);
+                            Artist artist = new Artist(id, image, title, key);
                             artists.add(artist);
                         }
                     }

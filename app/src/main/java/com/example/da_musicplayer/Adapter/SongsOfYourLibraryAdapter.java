@@ -2,7 +2,6 @@ package com.example.da_musicplayer.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +9,10 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.da_musicplayer.Define.Songs_Item;
-import com.example.da_musicplayer.Fragment.YourLibraryFragment;
 import com.example.da_musicplayer.MainActivity;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DatabaseReference;
@@ -25,7 +21,7 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourLibraryAdapter.MyViewHolder> {
+public class SongsOfYourLibraryAdapter extends RecyclerView.Adapter<SongsOfYourLibraryAdapter.MyViewHolder> {
 
     private ArrayList<Songs_Item> songs_of_favoriteList;
     private Context mContext;
@@ -46,20 +42,20 @@ public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourL
         this.onItemClickListener = listener;
     }
 
-    public ItemsOfYourLibraryAdapter(Context mContext, ArrayList<Songs_Item> songs_of_favoriteList) {
+    public SongsOfYourLibraryAdapter(Context mContext, ArrayList<Songs_Item> songs_of_favoriteList) {
         this.songs_of_favoriteList = songs_of_favoriteList;
         this.mContext = mContext;
     }
 
     @NonNull
     @Override
-    public ItemsOfYourLibraryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SongsOfYourLibraryAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.items_yourlibrary_layout, parent, false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ItemsOfYourLibraryAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
+    public void onBindViewHolder(@NonNull SongsOfYourLibraryAdapter.MyViewHolder holder, @SuppressLint("RecyclerView") int position) {
 
         Songs_Item song = songs_of_favoriteList.get(position);
         removePosition = position;
@@ -68,24 +64,25 @@ public class ItemsOfYourLibraryAdapter extends RecyclerView.Adapter<ItemsOfYourL
         holder.clear_itemOfYourLibrary_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                database = FirebaseDatabase.getInstance();
-                databaseReference = database.getReference();
-                databaseReference.child("Users")
-                        .child(MainActivity.uid_User())
-                        .child("listSongFavourite")
-                        .child(song.getTitle_song())
-                        .removeValue();
+                System.out.println(position);
+
                 sharedPreferences = mContext.getSharedPreferences("FavoriteSongs"+MainActivity.uid_User(),Context.MODE_PRIVATE);
                 isRemove = sharedPreferences.getBoolean(song.getTitle_song(), false);
                 if(isRemove) {
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putBoolean(song.getTitle_song(), false);
                     editor.apply();
-                   if(removePosition != -1){
+                   if(removePosition >= 0){
                        removeSong(song);
                        notifyItemRemoved(removePosition);
                    }
-
+                    database = FirebaseDatabase.getInstance();
+                    databaseReference = database.getReference();
+                    databaseReference.child("Users")
+                            .child(MainActivity.uid_User())
+                            .child("listSongFavourite")
+                            .child(song.getTitle_song())
+                            .removeValue();
                 }
             }
         });

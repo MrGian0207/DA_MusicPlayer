@@ -2,13 +2,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.HomeFragment"
     android:background="@color/midDark">
 <androidx.core.widget.NestedScrollView
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -25,6 +25,7 @@
             android:id="@+id/topAlbums_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginStart="17dp">
         </androidx.recyclerview.widget.RecyclerView>
@@ -41,6 +42,7 @@
             android:id="@+id/topArtist_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="horizontal"
             android:layout_marginStart="17dp">
         </androidx.recyclerview.widget.RecyclerView>
@@ -57,6 +59,7 @@
             android:id="@+id/topSongs_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:layout_marginStart="17dp">
         </androidx.recyclerview.widget.RecyclerView>

@@ -12,17 +12,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.GridView;
 
-import com.example.da_musicplayer.Adapter.TopAlbumsAdapter;
-import com.example.da_musicplayer.Adapter.TopArtistsAdapter;
-import com.example.da_musicplayer.Adapter.TopSongsAdapter;
-import com.example.da_musicplayer.Data.AlbumsData;
-import com.example.da_musicplayer.Data.ArtistsData;
-import com.example.da_musicplayer.Data.SongsData;
-import com.example.da_musicplayer.Define.Albums;
-import com.example.da_musicplayer.Define.Artists;
-import com.example.da_musicplayer.Define.Songs;
+import com.example.da_musicplayer.Adapter.AlbumAdapter;
+import com.example.da_musicplayer.Adapter.ArtistAdapter;
+import com.example.da_musicplayer.Adapter.SongAdapter;
+import com.example.da_musicplayer.Data.TopAlbumsData;
+import com.example.da_musicplayer.Data.TopArtistsData;
+import com.example.da_musicplayer.Data.TopSongsData;
+import com.example.da_musicplayer.Define.Album;
+import com.example.da_musicplayer.Define.Artist;
+import com.example.da_musicplayer.Define.Song;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.example.da_musicplayer.Interface.ArtistsCallback;
 import com.example.da_musicplayer.Interface.SongsCallback;
@@ -34,12 +33,12 @@ import java.util.ArrayList;
 
 public class HomeFragment extends Fragment{
     RecyclerView recyclerView;
-    ArrayList<Albums> albumsList;
-    ArrayList<Artists> artistsList;
-    ArrayList<Songs> songsList;
-    TopAlbumsAdapter adapter_albums;
-    TopArtistsAdapter adapter_artists;
-    TopSongsAdapter adapter_songs;
+    ArrayList<Album> albumList;
+    ArrayList<Artist> artistList;
+    ArrayList<Song> songList;
+    AlbumAdapter adapter_albums;
+    ArtistAdapter adapter_artists;
+    SongAdapter adapter_songs;
     private FavoriteManager favoriteManager;
 
     @Override
@@ -54,14 +53,14 @@ public class HomeFragment extends Fragment{
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         favoriteManager = new FavoriteManager(getContext());
-        AlbumsData.generateAlbumsData(new AlbumsCallback() {
+        TopAlbumsData.generateAlbumsData(new AlbumsCallback() {
             @Override
-            public void onAlbumsLoaded(ArrayList<Albums> albums) {
-                albumsList = albums;
+            public void onAlbumsLoaded(ArrayList<Album> albums) {
+                albumList = albums;
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView = view.findViewById(R.id.topAlbums_recyclerview);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter_albums = new TopAlbumsAdapter(getContext(), albumsList, favoriteManager);
+                adapter_albums = new AlbumAdapter(getContext(), albumList, favoriteManager);
                 recyclerView.setAdapter(adapter_albums);
             }
 
@@ -72,14 +71,14 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        ArtistsData.generateArtist(new ArtistsCallback() {
+        TopArtistsData.generateArtist(new ArtistsCallback() {
             @Override
-            public void onArtistsLoaded(ArrayList<Artists> artists) {
-                artistsList = artists;
+            public void onArtistsLoaded(ArrayList<Artist> artists) {
+                artistList = artists;
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
                 recyclerView = view.findViewById(R.id.topArtist_recyclerview);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter_artists = new TopArtistsAdapter(getActivity().getApplicationContext(), artistsList);
+                adapter_artists = new ArtistAdapter(getActivity().getApplicationContext(), artistList);
                 recyclerView.setAdapter(adapter_artists);
             }
 
@@ -90,14 +89,14 @@ public class HomeFragment extends Fragment{
             }
         });
 
-        SongsData.generateSongs(new SongsCallback() {
+        TopSongsData.generateSongs(new SongsCallback() {
             @Override
-            public void onSongsLoaded(ArrayList<Songs> songs) {
-                songsList = songs;
+            public void onSongsLoaded(ArrayList<Song> songs) {
+                songList = songs;
                 GridLayoutManager layoutManager = new GridLayoutManager(getContext(),2);
                 recyclerView = view.findViewById(R.id.topSongs_recyclerview);
                 recyclerView.setLayoutManager(layoutManager);
-                adapter_songs = new TopSongsAdapter(getActivity().getApplicationContext(), songsList);
+                adapter_songs = new SongAdapter(getActivity().getApplicationContext(), songList);
                 recyclerView.setAdapter(adapter_songs);
             }
 

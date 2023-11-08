@@ -2,7 +2,7 @@ package com.example.da_musicplayer.Data;
 
 import androidx.annotation.NonNull;
 
-import com.example.da_musicplayer.Define.Albums;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.Define.Songs_Item;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
 import com.google.firebase.database.DataSnapshot;
@@ -22,7 +22,7 @@ public class AlbumsFavorite_Data {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                ArrayList<Albums> albums = new ArrayList<>();
+                ArrayList<Album> albums = new ArrayList<>();
                 if (snapshot.exists()) {
                     for (DataSnapshot artistSnapshot : snapshot.getChildren()) {
                         if (artistSnapshot.exists()) {
@@ -51,7 +51,7 @@ public class AlbumsFavorite_Data {
                                 }
 
                             }
-                            Albums album = new Albums(id, image, title, key, name, listSong);
+                            Album album = new Album(id, image, title, key, name, listSong);
                             albums.add(album);
                         }
                     }

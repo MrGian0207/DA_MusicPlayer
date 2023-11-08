@@ -12,12 +12,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class Songs_Item_Data {
+public class SongsOfTopArtist_Data {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
-    public static void generateSongsItem(final SongsItemCallback callback, String key) {
-        myRef.child("Albums/"+key+"/songs").addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void generateSongsItemOfTopArtist(final SongsItemCallback callback, String key) {
+        myRef.child("TopArtists/"+key+"/songs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 

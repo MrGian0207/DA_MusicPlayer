@@ -2,13 +2,13 @@ package com.example.da_musicplayer.Define;
 
 import java.io.Serializable;
 
-public class Songs implements Serializable {
+public class Song implements Serializable {
     private int id;
     private String source_photo;
     private String title_photo;
     private String link_song;
 
-    public Songs(int id, String source_photo, String title_photo, String link_song) {
+    public Song(int id, String source_photo, String title_photo, String link_song) {
         this.id = id;
         this.source_photo = source_photo;
         this.title_photo = title_photo;

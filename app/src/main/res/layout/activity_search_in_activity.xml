@@ -6,10 +6,28 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/linear_gradient_album"
-    tools:context=".SearchView.Search_In_Album">
-
+    tools:context=".SearchView.Search_In_Activity">
+    <LinearLayout
+        android:id="@+id/backFromSearchInActivity"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="10dp"
+        android:paddingHorizontal="10dp">
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:background="@drawable/baseline_keyboard_backspace_24"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:textColor="@color/dark"
+            android:textStyle="bold"
+            android:textSize="20sp"/>
+    </LinearLayout>
     <androidx.appcompat.widget.SearchView
-        android:id="@+id/searchView_in_album"
+        android:id="@+id/searchView_in_activity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
@@ -18,7 +36,7 @@
         app:iconifiedByDefault="false"
         app:queryHint="Find in this page"/>
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView_in_album"
+        android:id="@+id/recyclerView_in_activity"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginHorizontal="10dp"

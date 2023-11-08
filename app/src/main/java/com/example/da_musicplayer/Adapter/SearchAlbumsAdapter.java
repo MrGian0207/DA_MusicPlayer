@@ -3,7 +3,6 @@ package com.example.da_musicplayer.Adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,14 +10,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.da_musicplayer.Album;
-import com.example.da_musicplayer.Data.AlbumsFavorite_Data;
-import com.example.da_musicplayer.Define.Albums;
-import com.example.da_musicplayer.Interface.AlbumsCallback;
-import com.example.da_musicplayer.MainActivity;
+import com.example.da_musicplayer.AlbumActivity;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.Manager.FavoriteManager;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DatabaseReference;
@@ -30,8 +25,8 @@ import java.util.ArrayList;
 
 public class SearchAlbumsAdapter extends RecyclerView.Adapter<SearchAlbumsAdapter.MyViewHolder> {
 
-    private ArrayList<Albums> albums_list;
-    private ArrayList<Albums> albums_list_temp;
+    private ArrayList<Album> album_list;
+    private ArrayList<Album> album_list_temp;
 
     private Context mContext;
 
@@ -41,18 +36,18 @@ public class SearchAlbumsAdapter extends RecyclerView.Adapter<SearchAlbumsAdapte
     boolean isFavorite;
     private FavoriteManager favoriteManager;
 
-    public SearchAlbumsAdapter(Context context, ArrayList<Albums> albums_list, FavoriteManager favoriteManager) {
+    public SearchAlbumsAdapter(Context context, ArrayList<Album> album_list, FavoriteManager favoriteManager) {
         this.mContext = context;
-        this.albums_list = albums_list;
+        this.album_list = album_list;
         this.favoriteManager = favoriteManager;
     }
     ////////////////////////////////////////////////////////////////////////////////////
-    public SearchAlbumsAdapter(ArrayList<Albums> albums_list) {
-        this.albums_list = albums_list;
+    public SearchAlbumsAdapter(ArrayList<Album> album_list) {
+        this.album_list = album_list;
     }
 
-    public void setFilteredList(ArrayList<Albums> filteredList){
-        this.albums_list = filteredList;
+    public void setFilteredList(ArrayList<Album> filteredList){
+        this.album_list = filteredList;
         notifyDataSetChanged();
     }
     ///////////////////////////////////////////////////////////////////////////////////
@@ -65,20 +60,20 @@ public class SearchAlbumsAdapter extends RecyclerView.Adapter<SearchAlbumsAdapte
 
     @Override
     public void onBindViewHolder(@NonNull SearchAlbumsAdapter.MyViewHolder holder, int position) {
-        Albums album = new Albums(albums_list.get(position).getId(),
-                albums_list.get(position).getSource_photo(),
-                albums_list.get(position).getTitle_photo(),
-                albums_list.get(position).getKey(),
-                albums_list.get(position).getName(),
-                albums_list.get(position).getSongs());
+        Album album = new Album(album_list.get(position).getId(),
+                album_list.get(position).getSource_photo(),
+                album_list.get(position).getTitle_photo(),
+                album_list.get(position).getKey(),
+                album_list.get(position).getName(),
+                album_list.get(position).getSongs());
 
-        Picasso.get().load(albums_list.get(position).getSource_photo()).into(holder.image_searchAlbums);
-        holder.title_searchAlbums.setText(albums_list.get(position).getTitle_photo());
+        Picasso.get().load(album_list.get(position).getSource_photo()).into(holder.image_searchAlbums);
+        holder.title_searchAlbums.setText(album_list.get(position).getTitle_photo());
 /////////////////////////////////////////////////////////////////////////////////////////////////////////
         holder.image_searchAlbums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Album.class);
+                Intent intent = new Intent(v.getContext(), AlbumActivity.class);
                 intent.putExtra("album",(Serializable) album);
                 intent.putExtra("album_searchFragmentClicked",true);
                 v.getContext().startActivity(intent);
@@ -89,7 +84,7 @@ public class SearchAlbumsAdapter extends RecyclerView.Adapter<SearchAlbumsAdapte
 
     @Override
     public int getItemCount() {
-        return albums_list.size();
+        return album_list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

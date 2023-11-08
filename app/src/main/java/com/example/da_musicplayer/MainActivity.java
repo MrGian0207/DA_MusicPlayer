@@ -1,34 +1,18 @@
     package com.example.da_musicplayer;
 
-    import androidx.annotation.NonNull;
-    import androidx.annotation.Nullable;
     import androidx.appcompat.app.AppCompatActivity;
     import androidx.fragment.app.FragmentPagerAdapter;
-    import androidx.recyclerview.widget.GridLayoutManager;
-    import androidx.viewpager.widget.PagerAdapter;
     import androidx.viewpager.widget.ViewPager;
 
     import android.content.Context;
     import android.content.Intent;
-    import android.content.SharedPreferences;
-    import android.graphics.Color;
-    import android.media.Image;
     import android.os.Bundle;
-    import android.view.View;
-    import android.widget.FrameLayout;
-    import android.widget.ImageView;
 
     import com.example.da_musicplayer.Adapter.NavigationAdapter;
-    import com.example.da_musicplayer.Adapter.SearchAlbumsAdapter;
-    import com.example.da_musicplayer.Data.AlbumsData;
-    import com.example.da_musicplayer.Define.Albums;
-    import com.example.da_musicplayer.Define.Artists;
-    import com.example.da_musicplayer.Define.Songs_Item;
     import com.example.da_musicplayer.Define.User;
     import com.example.da_musicplayer.Fragment.HomeFragment;
     import com.example.da_musicplayer.Fragment.SearchFragment;
     import com.example.da_musicplayer.Fragment.YourLibraryFragment;
-    import com.example.da_musicplayer.Interface.AlbumsCallback;
     import com.google.android.gms.auth.api.signin.GoogleSignIn;
     import com.google.android.gms.auth.api.signin.GoogleSignInClient;
     import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -37,9 +21,6 @@
     import com.google.firebase.auth.FirebaseUser;
     import com.google.firebase.database.DatabaseReference;
     import com.google.firebase.database.FirebaseDatabase;
-    import com.squareup.picasso.Picasso;
-
-    import java.util.ArrayList;
 
     public class MainActivity extends AppCompatActivity {
         private TabLayout tabLayout;

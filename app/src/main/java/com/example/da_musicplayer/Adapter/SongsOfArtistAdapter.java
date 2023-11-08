@@ -22,52 +22,48 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.MyViewHolder>{
-
+public class SongsOfArtistAdapter extends RecyclerView.Adapter<SongsOfArtistAdapter.MyViewHolder> {
     private FirebaseDatabase database;
     private DatabaseReference databaseReference;
-    private ArrayList<Songs_Item> songs_of_album_list;
+    private ArrayList<Songs_Item> songs_of_artist_list;
     private Context mContext;
     private SharedPreferences sharedPreferences;
     boolean isFavorite;
-
 
     public interface OnItemClickListener {
         void onItemClick(int position);
     }
 
-    private OnItemClickListener onItemClickListener;
+    private SongsOfArtistAdapter.OnItemClickListener onItemClickListener;
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
+    public void setOnItemClickListener(SongsOfArtistAdapter.OnItemClickListener listener) {
         this.onItemClickListener = listener;
     }
-
     //////////////////////////////////////////////////////////////////////////////////////
-    public SongOfAlbumAdapter(ArrayList<Songs_Item> songs_of_album_list) {
-        this.songs_of_album_list = songs_of_album_list;
+    public SongsOfArtistAdapter(ArrayList<Songs_Item> songs_of_artist_list) {
+        this.songs_of_artist_list = songs_of_artist_list;
     }
 
     public void setFilteredList(ArrayList<Songs_Item> filteredList){
-        this.songs_of_album_list = filteredList;
+        this.songs_of_artist_list = filteredList;
         notifyDataSetChanged();
     }
     /////////////////////////////////////////////////////////////////////////////////////
-    public SongOfAlbumAdapter(Context mContext, ArrayList<Songs_Item> songs_of_album_list) {
-        this.songs_of_album_list = songs_of_album_list;
+    public SongsOfArtistAdapter(Context mContext, ArrayList<Songs_Item> songs_of_artist_list) {
+        this.songs_of_artist_list = songs_of_artist_list;
         this.mContext = mContext;
-        this.sharedPreferences = mContext.getSharedPreferences("FavoriteSongs"+MainActivity.uid_User(), Context.MODE_PRIVATE);
+        this.sharedPreferences = mContext.getSharedPreferences("FavoriteSongs"+ MainActivity.uid_User(), Context.MODE_PRIVATE);
     }
-
     @NonNull
     @Override
-    public SongOfAlbumAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public SongsOfArtistAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.song_of_activity_layout, parent, false);
-        return new MyViewHolder(view);
+        return new SongsOfArtistAdapter.MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull SongOfAlbumAdapter.MyViewHolder holder, int position) {
-        Songs_Item song_favourite = songs_of_album_list.get(position);
+    public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
+        Songs_Item song_favourite = songs_of_artist_list.get(position);
         // Trạng thái ban đầu
         isFavorite = sharedPreferences.getBoolean(song_favourite.getTitle_song(), false);
         if (isFavorite) {
@@ -94,7 +90,7 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
             holder.favorite_song_btn.setBackground(favoriteDrawable);
         }
 
-        Picasso.get().load(songs_of_album_list.get(position).getSource_photo()).into(holder.image_songofalbum);
+        Picasso.get().load(songs_of_artist_list.get(position).getSource_photo()).into(holder.image_songofalbum);
         holder.singer_songofalbum.setText(song_favourite.getSinger_song());
         holder.title_songofalbum.setText(song_favourite.getTitle_song());
 
@@ -144,7 +140,7 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
 
     @Override
     public int getItemCount() {
-        return songs_of_album_list.size();
+        return songs_of_artist_list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder {
@@ -170,4 +166,5 @@ public class SongOfAlbumAdapter extends RecyclerView.Adapter<SongOfAlbumAdapter.
             });
         }
     }
+
 }

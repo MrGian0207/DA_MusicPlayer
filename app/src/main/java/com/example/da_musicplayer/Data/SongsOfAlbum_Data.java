@@ -2,9 +2,7 @@ package com.example.da_musicplayer.Data;
 
 import androidx.annotation.NonNull;
 
-import com.example.da_musicplayer.Define.Songs;
 import com.example.da_musicplayer.Define.Songs_Item;
-import com.example.da_musicplayer.Interface.SongsCallback;
 import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -14,13 +12,12 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
-public class ListSongsData {
+public class SongsOfAlbum_Data {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
-
-    public static void generatelistSongs(final SongsItemCallback callback) {
-        myRef.child("Songs").addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void generateSongsItem(final SongsItemCallback callback, String key) {
+        myRef.child("Albums/"+key+"/songs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -34,7 +31,6 @@ public class ListSongsData {
                             String singer = "";
                             String linkSong = "";
                             for (DataSnapshot artistSnapshot_item : artistSnapshot.getChildren()) {
-                                System.out.println(artistSnapshot_item.getValue());
                                 if (artistSnapshot_item.getKey().equals("id")) {
                                     id = artistSnapshot_item.getValue(Integer.class);
                                 } else if (artistSnapshot_item.getKey().equals("image")) {
@@ -61,4 +57,6 @@ public class ListSongsData {
             }
         });
     }
+
+
 }

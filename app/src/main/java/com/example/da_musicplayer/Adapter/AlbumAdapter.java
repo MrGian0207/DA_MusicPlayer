@@ -14,15 +14,10 @@ import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.da_musicplayer.Album;
-import com.example.da_musicplayer.Data.Songs_Item_Data;
-import com.example.da_musicplayer.Define.Albums;
-import com.example.da_musicplayer.Define.Songs;
-import com.example.da_musicplayer.Define.Songs_Item;
-import com.example.da_musicplayer.Interface.SongsItemCallback;
+import com.example.da_musicplayer.AlbumActivity;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.MainActivity;
 import com.example.da_musicplayer.Manager.FavoriteManager;
-import com.example.da_musicplayer.Player;
 import com.example.da_musicplayer.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
@@ -32,9 +27,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 
 
-public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyViewHolder> {
+public class AlbumAdapter extends RecyclerView.Adapter<AlbumAdapter.MyViewHolder> {
 
-    private ArrayList<Albums> albums_list;
+    private ArrayList<Album> album_list;
     private Context mContext;
 
     private FirebaseDatabase database;
@@ -43,46 +38,46 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
     boolean isFavorite;
     private FavoriteManager favoriteManager;
 
-    public TopAlbumsAdapter(Context context, ArrayList<Albums> albums_list, FavoriteManager favoriteManager) {
+    public AlbumAdapter(Context context, ArrayList<Album> album_list, FavoriteManager favoriteManager) {
         this.mContext = context;
-        this.albums_list = albums_list;
+        this.album_list = album_list;
 //        this.sharedPreferences = mContext.getSharedPreferences("FavoriteAlbums"+MainActivity.uid_User(), Context.MODE_PRIVATE);
         this.favoriteManager = favoriteManager;
     }
 ////////////////////////////////////////////////////////////////////////////////////
-    public TopAlbumsAdapter(ArrayList<Albums> albums_list) {
-        this.albums_list = albums_list;
+    public AlbumAdapter(ArrayList<Album> album_list) {
+        this.album_list = album_list;
     }
 
-    public void setFilteredList(ArrayList<Albums> filteredList){
-        this.albums_list = filteredList;
+    public void setFilteredList(ArrayList<Album> filteredList){
+        this.album_list = filteredList;
         notifyDataSetChanged();
     }
 ///////////////////////////////////////////////////////////////////////////////////
     @NonNull
     @Override
-    public TopAlbumsAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public AlbumAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.tops_albums_layout,parent,false);
         return new MyViewHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TopAlbumsAdapter.MyViewHolder holder, int position) {
-        Albums album = new Albums(albums_list.get(position).getId(),
-                albums_list.get(position).getSource_photo(),
-                albums_list.get(position).getTitle_photo(),
-                albums_list.get(position).getKey(),
-                albums_list.get(position).getName(),
-                albums_list.get(position).getSongs());
+    public void onBindViewHolder(@NonNull AlbumAdapter.MyViewHolder holder, int position) {
+        Album album = new Album(album_list.get(position).getId(),
+                album_list.get(position).getSource_photo(),
+                album_list.get(position).getTitle_photo(),
+                album_list.get(position).getKey(),
+                album_list.get(position).getName(),
+                album_list.get(position).getSongs());
 
-        Picasso.get().load(albums_list.get(position).getSource_photo()).into(holder.image_topAlbums);
-        holder.title_topAlbums.setText(albums_list.get(position).getTitle_photo());
+        Picasso.get().load(album_list.get(position).getSource_photo()).into(holder.image_topAlbums);
+        holder.title_topAlbums.setText(album_list.get(position).getTitle_photo());
 //////////////////////////////////////////////////////////////////////////////////////////////////////////
         // Trạng thái ban đầu
         isFavorite = favoriteManager.isFavorite(album.getKey());
 
         if (isFavorite) {
-            Albums album_favourite = new Albums(album.getId(),
+            Album album_favourite = new Album(album.getId(),
                     album.getSource_photo(),
                     album.getTitle_photo(),
                     album.getKey(),
@@ -117,7 +112,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
             public void onClick(View v) {
                 isFavorite = !isFavorite;
                 if (isFavorite) {
-                    Albums album_favourite = new Albums(album.getId(),
+                    Album album_favourite = new Album(album.getId(),
                             album.getSource_photo(),
                             album.getTitle_photo(),
                             album.getKey(),
@@ -157,7 +152,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
         holder.image_topAlbums.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(v.getContext(), Album.class);
+                Intent intent = new Intent(v.getContext(), AlbumActivity.class);
                 intent.putExtra("album",(Serializable) album);
                 intent.putExtra("top_albumClicked",true);
                 v.getContext().startActivity(intent);
@@ -167,7 +162,7 @@ public class TopAlbumsAdapter extends RecyclerView.Adapter<TopAlbumsAdapter.MyVi
 
     @Override
     public int getItemCount() {
-        return albums_list.size();
+        return album_list.size();
     }
 
     class MyViewHolder extends RecyclerView.ViewHolder{

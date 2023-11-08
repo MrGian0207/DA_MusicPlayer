@@ -3,45 +3,39 @@ package com.example.da_musicplayer.Define;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Albums implements Serializable {
+public class Artist implements Serializable {
     private int id;
     private String source_photo;
     private String title_photo;
     private String key;
-    private String name;
-    private ArrayList<Songs_Item> songs;
+    private ArrayList<Songs_Item> listSong;
 
-    public Albums(int id, String source_photo, String title_photo, String key, String name) {
+    public Artist(int id, String source_photo, String title) {
+        this.id = id;
+        this.source_photo = source_photo;
+        this.title_photo = title;
+    }
+    public Artist(int id, String source_photo, String title, String key, ArrayList<Songs_Item> listSong) {
+        this.id = id;
+        this.source_photo = source_photo;
+        this.title_photo = title;
+        this.key = key;
+        this.listSong = listSong;
+    }
+
+    public Artist(int id, String source_photo, String title_photo, String key) {
         this.id = id;
         this.source_photo = source_photo;
         this.title_photo = title_photo;
         this.key = key;
-        this.name = name;
     }
 
-    public Albums(int id, String source_photo, String title_photo, String key, String name, ArrayList<Songs_Item> songs) {
-        this.id = id;
-        this.source_photo = source_photo;
-        this.title_photo = title_photo;
-        this.key = key;
-        this.name = name;
-        this.songs = songs;
+    public ArrayList<Songs_Item> getListSong() {
+        return listSong;
     }
 
-    public ArrayList<Songs_Item> getSongs() {
-        return songs;
-    }
-
-    public void setSongs(ArrayList<Songs_Item> songs) {
-        this.songs = songs;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setListSong(ArrayList<Songs_Item> listSong) {
+        this.listSong = listSong;
     }
 
     public String getKey() {
@@ -51,7 +45,6 @@ public class Albums implements Serializable {
     public void setKey(String key) {
         this.key = key;
     }
-
     public int getId() {
         return id;
     }

@@ -3,10 +3,8 @@ package com.example.da_musicplayer.Data;
 
 import androidx.annotation.NonNull;
 
-import com.example.da_musicplayer.Define.Albums;
+import com.example.da_musicplayer.Define.Album;
 import com.example.da_musicplayer.Interface.AlbumsCallback;
-import com.google.android.gms.tasks.Task;
-import com.google.android.gms.tasks.Tasks;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -14,18 +12,17 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 
-public class AlbumsData {
+public class TopAlbumsData {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
 
     public static void generateAlbumsData(final AlbumsCallback callback) {
-        myRef.child("Albums").addListenerForSingleValueEvent(new ValueEventListener() {
+        myRef.child("TopAlbums").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Albums> albums = new ArrayList<>();
+                ArrayList<Album> albums = new ArrayList<>();
                 if (snapshot.exists()){
                     for (DataSnapshot albumSnapshot : snapshot.getChildren()){
                           if (albumSnapshot.exists()){
@@ -53,7 +50,7 @@ public class AlbumsData {
                                                 }
 
                               }
-                              Albums album = new Albums(id,image,title,key,name);
+                              Album album = new Album(id,image,title,key,name);
                               albums.add(album);
                          }
                     }

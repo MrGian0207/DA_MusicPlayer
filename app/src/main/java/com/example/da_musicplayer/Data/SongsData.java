@@ -2,8 +2,8 @@ package com.example.da_musicplayer.Data;
 
 import androidx.annotation.NonNull;
 
-import com.example.da_musicplayer.Define.Songs;
-import com.example.da_musicplayer.Interface.SongsCallback;
+import com.example.da_musicplayer.Define.Songs_Item;
+import com.example.da_musicplayer.Interface.SongsItemCallback;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -17,24 +17,28 @@ public class SongsData {
     static DatabaseReference myRef = database.getReference();
 
 
-    public static void generateSongs(final SongsCallback callback) {
-        myRef.child("Musics").addListenerForSingleValueEvent(new ValueEventListener() {
+    public static void generatelistSongs(final SongsItemCallback callback) {
+        myRef.child("Songs").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                ArrayList<Songs> songs = new ArrayList<>();
+
+                ArrayList<Songs_Item> songs = new ArrayList<>();
                 if (snapshot.exists()) {
                     for (DataSnapshot artistSnapshot : snapshot.getChildren()) {
                         if (artistSnapshot.exists()) {
                             Integer id = 0;
                             String image = "";
                             String title = "";
+                            String singer = "";
                             String linkSong = "";
                             for (DataSnapshot artistSnapshot_item : artistSnapshot.getChildren()) {
-
+                                System.out.println(artistSnapshot_item.getValue());
                                 if (artistSnapshot_item.getKey().equals("id")) {
                                     id = artistSnapshot_item.getValue(Integer.class);
                                 } else if (artistSnapshot_item.getKey().equals("image")) {
                                     image = artistSnapshot_item.getValue(String.class);
+                                } else if (artistSnapshot_item.getKey().equals("singer")) {
+                                    singer = artistSnapshot_item.getValue(String.class);
                                 } else if (artistSnapshot_item.getKey().equals("title")) {
                                     title = artistSnapshot_item.getValue(String.class);
                                 } else if (artistSnapshot_item.getKey().equals("linkSong")) {
@@ -42,38 +46,17 @@ public class SongsData {
                                 }
 
                             }
-                            Songs song = new Songs(id, image, title, linkSong);
+                            Songs_Item song = new Songs_Item(id, image, title, singer, linkSong);
                             songs.add(song);
                         }
                     }
-                    callback.onSongsLoaded(songs);
+                    callback.onSongsItemLoaded(songs);
                 }
             }
             @Override
             public void onCancelled (@NonNull DatabaseError error){
-                callback.onSongsLoadError("Lỗi khi tải dữ liệu: " + error.getMessage());
+                callback.onSongsItemLoadError("Lỗi khi tải dữ liệu: " + error.getMessage());
             }
         });
     }
-
-
-//    public static void getPhotoFromId(int id, final AlbumCallback callback) {
-//        generatePhotoData(new AlbumsCallback() {
-//            @Override
-//            public void onAlbumsLoaded(ArrayList<Albums> albums) {
-//                for (Albums album : albums) {
-//                    if (album.getId() == id) {
-//                        callback.onAlbumLoaded(album);
-//                        return; // Tìm thấy album, không cần kiểm tra tiếp
-//                    }
-//                }
-//                callback.onAlbumNotFound(); // Không tìm thấy album với id đã cho
-//            }
-//
-//            @Override
-//            public void onAlbumsLoadError(String errorMessage) {
-//                callback.onAlbumLoadError(errorMessage); // Xử lý lỗi khi tải dữ liệu
-//            }
-//        });
-//    }
 }
