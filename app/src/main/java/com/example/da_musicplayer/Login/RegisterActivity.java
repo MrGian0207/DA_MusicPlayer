@@ -33,7 +33,6 @@ public class RegisterActivity extends AppCompatActivity {
     FirebaseAuth firebaseAuth;
 
     GoogleSignInClient googleSignInClient;
-
     GoogleSignInOptions googleSignInOptions;
 
     private static final String TAG = "GoogleActivity";

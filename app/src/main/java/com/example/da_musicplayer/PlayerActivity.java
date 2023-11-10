@@ -47,7 +47,6 @@ public class PlayerActivity extends AppCompatActivity {
     int position;
     boolean isLooping;
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -387,7 +386,7 @@ public class PlayerActivity extends AppCompatActivity {
         // Gọi phương thức navigateToSearchFragment() để quay lại SearchFragment
         MainActivity mainActivity = new MainActivity();
         // Kiểm tra xem mediaPlayer đang phát nhạc hay không
-        if (mediaPlayer != null && mediaPlayer.isPlaying()) {
+        if (mediaPlayer.isPlaying()) {
             mediaPlayer.stop(); // Dừng phát nhạc
         }
         // Tạo một đối tượng MainActivity

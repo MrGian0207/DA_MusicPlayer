@@ -32,9 +32,7 @@ public class LoginActivity extends AppCompatActivity {
     Button btnLogin, btnGoogleLogin;
     TextView registerRedirectText, resetRedirectText;
     FirebaseAuth firebaseAuth;
-
     GoogleSignInClient googleSignInClient;
-
     GoogleSignInOptions googleSignInOptions;
 
     private static final String TAG = "GoogleActivity";

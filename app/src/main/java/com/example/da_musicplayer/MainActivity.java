@@ -81,7 +81,6 @@
 
             database = FirebaseDatabase.getInstance();
             databaseReference = database.getReference();
-
             firebaseAuth = FirebaseAuth.getInstance();
             googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                     .requestIdToken("435223218602-a3138190hhhhvsbfutusosi3lmnkmv8a.apps.googleusercontent.com")

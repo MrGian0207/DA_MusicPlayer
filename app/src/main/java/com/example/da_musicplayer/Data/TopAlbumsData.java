@@ -17,7 +17,6 @@ public class TopAlbumsData {
     static FirebaseDatabase database = FirebaseDatabase.getInstance();
     static DatabaseReference myRef = database.getReference();
 
-
     public static void generateAlbumsData(final AlbumsCallback callback) {
         myRef.child("TopAlbums").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
