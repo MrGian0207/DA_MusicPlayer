@@ -29,10 +29,6 @@ public class ArtistsActivity extends AppCompatActivity {
     Intent intent;
     ArrayList<Songs_Item> songs_of_top_artist_list;
     SongsOfArtistAdapter songsOfArtistAdapter;
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
